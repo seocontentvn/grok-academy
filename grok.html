@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cẩm Nang Toàn Tập: Tạo Video Từ Ảnh Bằng Grok Super</title>
+    <style>
+        :root {
+            --primary-color: #00A651; /* Màu xanh lá tone BeanStalk */
+            --secondary-color: #2c3e50;
+            --accent-color: #f39c12; /* Màu nhấn cảnh báo/lưu ý */
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --box-bg: #ffffff;
+            --code-bg: #1e1e1e;
+            --code-text: #00ffcc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: var(--box-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+            margin-top: 50px;
+            background-color: #f8f9fa;
+            padding: 10px 10px 10px 15px;
+            border-radius: 0 8px 8px 0;
+            text-transform: uppercase;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            margin-top: 30px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 5px;
+        }
+        
+        h4 {
+            color: var(--secondary-color);
+            margin-top: 20px;
+        }
+
+        p {
+            font-size: 1.1em;
+        }
+
+        .highlight-box {
+            background-color: #e8f8f5;
+            border-left: 5px solid #1abc9c;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .warning-box {
+            background-color: #fdf2e9;
+            border-left: 5px solid var(--accent-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .example-box {
+            background-color: #f8fbff;
+            border: 1px solid #cce5ff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .example-box h4 {
+            margin-top: 0;
+            color: #0056b3;
+        }
+
+        .image-showcase {
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px dashed #bdc3c7;
+        }
+
+        .image-showcase img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .prompt-box {
+            background-color: var(--code-bg);
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.05em;
+            position: relative;
+            margin: 15px 0;
+            line-height: 1.5;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .prompt-box strong { color: #f39c12; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1em;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+
+        table thead tr {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            text-align: left;
+        }
+
+        table th, table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #dddddd;
+            vertical-align: top;
+        }
+
+        table tbody tr:nth-of-type(even) {
+            background-color: #f9f9f9;
+        }
+
+        .term-en { font-weight: bold; color: #2980b9; display: block; margin-bottom: 5px;}
+        .term-vi { font-style: italic; color: #7f8c8d; font-size: 0.9em; display: block; margin-bottom: 5px;}
+        
+        ul.custom-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        ul.custom-list li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        ul.custom-list li::before {
+            content: "👉";
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>CẨM NANG GROK SUPER (A-Z)</h1>
+        <p><strong>Bí kíp thực chiến: Từ Ảnh tĩnh đến Video Marketing Hoàn Chỉnh</strong></p>
+    </header>
+
+    <div class="highlight-box">
+        <strong>🎯 Mục tiêu:</strong> Giúp nhân sự làm chủ quy trình Image-to-Video. Hiểu đúng ngôn ngữ AI, setup góc máy ảo chuẩn xác, và hậu kỳ chuyên nghiệp để tạo ra sản phẩm truyền thông chất lượng cao.
+    </div>
+
+    <h2>PHẦN I: TƯ DUY AI & QUY TẮC "ĐẦU VÀO"</h2>
+    <ul class="custom-list">
+        <li><strong>Quy tắc "Khoảnh khắc" (The Moment Rule):</strong> AI sinh ra để tạo các clip ngắn (3-10 giây) ấn tượng. Đừng ép AI làm phim dài 1 phút. Hãy tạo nhiều clip ngắn rồi ghép lại trên CapCut.</li>
+        <li><strong>Chấp nhận "Tỷ lệ hỏng":</strong> AI vẫn có lúc lỗi (méo mặt, sai tay). Hãy tập thói quen bấm "Tạo lại" (Regenerate) ít nhất 3 lần với cùng 1 prompt trước khi sửa chữ.</li>
+        <li><strong>Quy tắc 80/20 trong Text:</strong> Trừ phi chỉ tạo 1-2 từ ngắn, AI xử lý text dài cực kém. Hãy để AI tạo video KHÔNG CHỮ (No text), sau đó dùng CapCut chèn text/hộp thông tin vào. Video sẽ chuyên nghiệp hơn rất nhiều!</li>
+        <li><strong>Chất lượng Ảnh Gốc:</strong> Tuyệt đối không dùng ảnh có lỗi AI (méo ngón tay, mắt lác). Crop sẵn ảnh đúng tỷ lệ 16:9 (ngang) hoặc 9:16 (dọc).</li>
+    </ul>
+
+    <h2>PHẦN II: TỪ ĐIỂN NGÔN NGỮ AI (CAMERA & ÁNH SÁNG)</h2>
+    <p><em>Lưu ý: Grok được train trên dữ liệu tiếng Anh, nên sử dụng các Keyword Tiếng Anh dưới đây trong Prompt sẽ mang lại kết quả chính xác nhất. Bảng dưới đây giải thích ý nghĩa để nhân viên ứng dụng đúng tình huống.</em></p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Từ khóa vào Prompt (Tiếng Anh)</th>
+                <th>Hiệu ứng Grok sẽ thực hiện (Tiếng Việt)</th>
+                <th>Ứng dụng thực tế</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3" style="background-color: #e8f8f5; font-weight: bold; text-align: center;">1. CHUYỂN ĐỘNG CAMERA (CAMERA WORK)</td>
+            </tr>
+            <tr>
+                <td><span class="term-en">Static camera / Locked-off camera</span></td>
+                <td>Máy quay đặt cố định trên chân máy, không nhúc nhích.</td>
+                <td>Giữ nguyên bố cục ảnh Infographic, chống vỡ/méo text trên ảnh gốc.</td>
+            </tr>
+            <tr>
+                <td><span class="term-en">Slow dolly in / Slow dolly out</span></td>
+                <td>Máy quay từ từ trượt tiến sát vào chủ thể / Hoặc lùi ra xa.</td>
+                <td>Tôn vinh chi tiết sản phẩm (Dolly in), hoặc khoe không gian rộng lớn (Dolly out).</td>
+            </tr>
+            <tr>
+                <td><span class="term-en">Tracking shot / Pan left, Pan right</span></td>
+                <td>Máy quay trượt ngang theo chiều trái/phải.</td>
+                <td>Quét ngang toàn cảnh một căn phòng, gian hàng, hoặc nhìn theo nhân vật đang bước đi.</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="background-color: #e8f8f5; font-weight: bold; text-align: center;">2. TẬP TRUNG CHỦ THỂ (SUBJECT FOCUS)</td>
+            </tr>
+            <tr>
+                <td><span class="term-en">Maintain absolute subject consistency</span><span class="term-en">Zero morphing</span></td>
+                <td>Lệnh "Ép" AI phải giữ nguyên hình dáng, màu sắc áo quần, không được tự ý thay đổi.</td>
+                <td><strong>Bắt buộc dùng</strong> cho video thời trang, sản phẩm có logo để không bị biến dạng sau vài giây.</td>
+            </tr>
+            <tr>
+                <td><span class="term-en">Shallow depth of field / Blur background</span></td>
+                <td>Làm mờ cảnh nền phía sau, chỉ lấy nét vào nhân vật/sản phẩm chính.</td>
+                <td>Xóa phông, làm nổi bật sản phẩm tĩnh (như lon sữa, cốc cafe) trên nền rối.</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="background-color: #e8f8f5; font-weight: bold; text-align: center;">3. ÁNH SÁNG ĐIỆN ẢNH (LIGHTING)</td>
+            </tr>
+            <tr>
+                <td><span class="term-en">Studio softbox lighting</span></td>
+                <td>Ánh sáng studio êm dịu, đánh đều các góc, không có bóng đổ gắt.</td>
+                <td>Quay Review sản phẩm, làm video mỹ phẩm, giới thiệu tính năng.</td>
+            </tr>
+            <tr>
+                <td><span class="term-en">Golden hour lighting</span></td>
+                <td>Ánh sáng giờ vàng (hoàng hôn), hắt tia nắng xiên màu vàng cam ấm áp.</td>
+                <td>Sản phẩm đồ ăn (F&B), thực phẩm chức năng, đồ mẹ & bé (tạo mood ấm cúng).</td>
+            </tr>
+            <tr>
+                <td><span class="term-en">Volumetric lighting / God rays</span></td>
+                <td>Ánh sáng hắt thành khối/tia sáng trong không gian (như nắng xuyên rèm).</td>
+                <td>Video nội thất, kiến trúc, không gian sang trọng.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>PHẦN III: CÔNG THỨC PROMPT CHUẨN</h2>
+    <div class="highlight-box" style="text-align: center; font-size: 1.2em; font-weight: bold; color: var(--secondary-color);">
+        [1. Khóa Cảnh Gốc] + [2. Tập trung Chủ thể] + [3. Chuyển động Môi trường] + [4. Lệnh Camera] + [5. Ánh sáng/Style]
+    </div>
+
+    <h2>PHẦN IV: THƯ VIỆN EXAMPLE THỰC CHIẾN (COPY & PASTE)</h2>
+
+    <h3>1. Case Study: Video Infographic Sản phẩm (BeanStalk)</h3>
+    <div class="image-showcase">
+        <img src="https://scontent.fsgn5-15.fna.fbcdn.net/v/t39.30808-6/652671658_122197096478523276_8681583075012378176_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=107&ccb=1-7&_nc_sid=13d280&_nc_ohc=_-nlvKViD70Q7kNvwEamEWR&_nc_oc=AdoXj8WWzfCNOuPA0tdNRkl80V9WKVY0bh1k1IA6AAFdyt95cXFt2fKsCtecueg7IOocymdYYO6dsWNJlNVx8UPb&_nc_zt=23&_nc_ht=scontent.fsgn5-15.fna&_nc_gid=ZTvwvWeDXOqb1IU1yFuCiA&_nc_ss=7a32e&oh=00_Afy9D4aWuG5z0MIaRk-GOXRUv6ajoXIohnT193QG6cqx9Q&oe=69C7DB3D" alt="Ảnh gốc minh họa - Sữa BeanStalk" onerror="this.onerror=null; this.src='https://via.placeholder.com/800x450.png?text=Loi+Hien+Thi+Anh+URL';">
+    </div>
+    <div class="example-box">
+        <p><strong>Nhu cầu:</strong> Làm video người mẫu mỉm cười, chỉ tay vào các box thông tin. Có lồng tiếng.</p>
+        <p><strong>Phân tích:</strong> Đây là ảnh có Text. Bắt buộc phải dùng `Static camera` để text trên ảnh không bị mờ méo. Cần thêm hiệu ứng voiceover đồng bộ.</p>
+        <div class="prompt-box">
+            Start with the exact cinematic scene from the provided image: the woman smiling, holding the BeanStalk can. The background and function chart remain static. Maintain absolute subject consistency, zero morphing on the text and product. <br><br>
+            A professional Northern Vietnamese female voiceover, clear and perfectly lip-synced, saying: "Lý do vì sao mẹ nên chọn mua sữa BeanStalk tại HSC? Nguồn gốc minh bạch, chất lượng chính hãng, tem nhãn đầy đủ và phân phối qua hệ thống uy tín!".<br><br>
+            Subtle movement: the woman nods slightly and smiles while speaking. Static locked-off camera throughout, absolutely no camera movement. Studio softbox lighting.
+        </div>
+        <p><em>*Tips Hậu kỳ: Đem video này vào CapCut, tải hiệu ứng tiếng 'Pop' ghép vào mỗi khi MC đọc tới 1 ý để video sinh động hơn.</em></p>
+    </div>
+
+    <h3>2. Case Study: Ngành Thời Trang (Fashion Lookbook)</h3>
+    <div class="example-box">
+        <p><strong>Nhu cầu:</strong> Biến ảnh người mẫu mặc bộ sưu tập mới chụp tại Studio thành video lookbook có hồn.</p>
+        <p><strong>Phân tích:</strong> Tuyệt đối không để AI làm méo form dáng quần áo. Chuyển động không đến từ việc người mẫu chạy nhảy, mà đến từ hiệu ứng gió thổi vải, tóc bay, và camera tiến lại gần.</p>
+        <div class="prompt-box">
+            Static scene of the fashion model in the exact outfit from the provided image. Maintain absolute subject and clothing consistency, zero morphing on the fabric details. <br><br>
+            Subtle movement: the model's hair and the fabric of the outfit gently blowing in a soft breeze. The model gives a subtle, confident pose, slight head turn. <br><br>
+            Slow dolly in camera movement to focus on the outfit's premium texture. Studio softbox lighting with a shallow depth of field, blurring the background to make the model pop. High-end fashion lookbook style, 4k resolution.
+        </div>
+    </div>
+
+    <h3>3. Case Study: Ngành F&B / Đồ ăn uống (Teaser thèm thuồng)</h3>
+    <div class="example-box">
+        <p><strong>Nhu cầu:</strong> Tạo video quảng cáo một cốc Cafe / Cốc trà sữa / Bát phở từ ảnh chụp sản phẩm tĩnh.</p>
+        <p><strong>Phân tích:</strong> Đồ ăn tĩnh không thể tự di chuyển. Sức sống của video đến từ khói, hơi nước, bọt ga sủi lấp lánh và ánh sáng vàng kích thích vị giác.</p>
+        <div class="prompt-box">
+            The exact cup of coffee from the reference image. The cup and table remain perfectly consistent and static, zero morphing. <br><br>
+            Subtle environmental kinetics: warm, appetizing steam gracefully rising and swirling from the surface of the coffee. <br><br>
+            Slow cinematic tracking shot panning to the right around the cup. Warm golden hour lighting highlighting the steam, making it look highly appetizing. Shallow depth of field. Professional food commercial style.
+        </div>
+    </div>
+
+    <h3>4. Case Study: Bất động sản / Nội thất (Room Tour)</h3>
+    <div class="example-box">
+        <p><strong>Nhu cầu:</strong> Giới thiệu không gian phòng khách/căn hộ mẫu từ một tấm ảnh render 3D hoặc ảnh chụp tĩnh.</p>
+        <p><strong>Phân tích:</strong> Kiến trúc cần sự vuông vức, không được cong vênh méo mó. Không gian cần cảm giác tĩnh lặng, sang trọng. Điểm nhấn là ánh sáng rọi qua cửa sổ và camera trượt mượt mà.</p>
+        <div class="prompt-box">
+            The exact modern living room interior from the provided image. Maintain perfect architectural consistency, no geometric distortion or morphing of the furniture. <br><br>
+            Volumetric sunlight (God rays) streaming through the windows, subtly illuminating dust particles in the air. Gentle breeze moving the sheer curtains very slightly. <br><br>
+            Slow and extremely smooth tracking shot moving forward (dolly in) into the room. Photorealistic architectural visualization, serene and luxurious atmosphere. No cuts.
+        </div>
+    </div>
+
+    <h2>PHẦN V: CẨM NANG BẮT BỆNH & CHỮA LỖI NHANH</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Lỗi thường gặp</th>
+                <th>Cách Chữa (Từ khóa cần thêm/Sửa)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Chữ trên ảnh bị vỡ, dính cục</strong></td>
+                <td>Chữ hỏng do AI cố tạo chuyển động 3D. Khóa chặt camera lại: <span class="good-keyword">Static locked-off camera, absolute no camera movement.</span></td>
+            </tr>
+            <tr>
+                <td><strong>Quần áo/Đồ vật tự nhiên biến hình</strong></td>
+                <td>AI nội suy quá tay. Thêm lệnh ép: <span class="good-keyword">Maintain absolute subject consistency, zero morphing.</span></td>
+            </tr>
+            <tr>
+                <td><strong>Video giật cục, chuyển cảnh ngẫu nhiên</strong></td>
+                <td>AI tự đổi cảnh. Thêm lệnh: <span class="good-keyword">Single continuous shot, zero cuts.</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <p>Tài liệu lưu hành nội bộ - Cập nhật chuyên môn kỹ thuật AI Video Marketing.</p>
+    </div>
+</div>
+
+</body>
+</html>
